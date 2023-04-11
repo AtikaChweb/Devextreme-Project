@@ -1,0 +1,175 @@
+<!-- form -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="text-center">
+          <div class="containter">
+            <h1 class="primary">Student Registration</h1>
+            <form [formGroup]="registerForm" (ngSubmit)="userRegister($event)">
+              <div class="mb-3">
+                <!-- Name field -->
+                <label>Name</label>
+                <dx-text-box formControlName="name" placeholder="Name">
+                  <dx-validator>
+                    <dxi-validation-rule
+                      type="required"
+                      message="Name is required !"
+                    ></dxi-validation-rule>
+                    <dxi-validation-rule
+                      type="pattern"
+                      [pattern]="namePattern"
+                      message="Do not use digits in the Name !"
+                    >
+                    </dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+                <br />
+                <!-- Lastname field -->
+                <label>Lastname</label>
+                <dx-text-box formControlName="lastname" placeholder="Lastname">
+                  <dx-validator>
+                    <dxi-validation-rule
+                      type="required"
+                      message="Lastname is required !"
+                    ></dxi-validation-rule>
+                    <dxi-validation-rule
+                      type="pattern"
+                      [pattern]="lastNamePattern"
+                      message="Do not use digits in the Lastame!"
+                    >
+                    </dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+                <!-- Email field -->
+                <br />
+                <label> Email</label>
+                <dx-text-box
+                  type="email"
+                  name="Email"
+                  formControlName="email"
+                  placeholder="Email address"
+                >
+                  <dx-validator>
+                    <dxi-validation-rule
+                      type="required"
+                      message="Email is required !"
+                    ></dxi-validation-rule>
+                    <dxi-validation-rule
+                      type="email"
+                      message="Email is invalid !"
+                    >
+                    </dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+                <!-- password field -->
+                <br />
+                <label>Password</label>
+                <dx-text-box
+                  type="password"
+                  name="Password"
+                  formControlName="password"
+                  placeholder="Password"
+                  mode="password"
+                  [(value)]="passwordMode"
+                >
+                  <dx-validator>
+                    <dxi-validation-rule
+                      type="required"
+                      message="Password is required !"
+                    >
+                    </dxi-validation-rule>
+                    <dxi-validation-rule
+                      type="stringLength"
+                      [min]="8"
+                      message="Password must have : At least 8 characters in length !"
+                    ></dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+                <br />
+                <!-- Mobile field -->
+                <label>Mobile</label>
+                <dx-text-box
+                  formControlName="mobile"
+                  placeholder="+355 _ _ _ _ _ _ _ _ _ (Albanian mobile format)"
+                >
+                  <dx-validator>
+                    <dxi-validation-rule
+                      type="required"
+                      message="Mobile is required !"
+                    ></dxi-validation-rule>
+                    <dxi-validation-rule
+                      type="pattern"
+                      [pattern]="mobilePattern"
+                      message="Albanian format number is required !"
+                    >
+                    </dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+                <br />
+                <label>Course</label>
+                <dx-text-box formControlName="course" placeholder="Course">
+                  <dx-validator>
+                    <dxi-validation-rule
+                      type="required"
+                      message="Type of course is required !"
+                    ></dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+
+                <br />
+                <dx-validation-summary id="summary"></dx-validation-summary>
+                <br />
+                <dx-button
+                  type="success"
+                  id="submit"
+                  name="submit"
+                  text="Register"
+                  [useSubmitBehavior]="true"
+                >
+                </dx-button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- data grid -->
+    <dx-data-grid
+      [dataSource]="students"
+      key="name"
+      [(visible)]="isDatagridVisible"
+    >
+      <dxi-column dataField="name"></dxi-column>
+      <dxi-column dataField="lastname"></dxi-column>
+      <dxi-column dataField="email"></dxi-column>
+      <dxi-column dataField="mobile"></dxi-column>
+      <dxi-column dataField="course"></dxi-column>
+    </dx-data-grid>
+  </div>
+</div>
+<!-- Pop up -->
+<dx-popup
+  id="entity-popup"
+  [width]="400"
+  height="auto"
+  [showTitle]="true"
+  title="Your data!"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="false"
+  [(visible)]="isPopupVisible"
+>
+  <div>
+    <p>Do you want to continue with registration?</p>
+  </div>
+  <p>Name :{{ student.name }}</p>
+  <p>Lastname :{{ student.lastname }}</p>
+  <p>Email :{{ student.email }}</p>
+  <p>Password :{{ student.password }}</p>
+  <P>Mobile:{{ student.mobile }}</P>
+  <p>Cuorse :{{ student.course }}</p>
+  <br />
+  <dx-button (onClick)="register($event)" type="default">Register</dx-button>
+</dx-popup>
