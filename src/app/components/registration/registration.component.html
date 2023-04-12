@@ -92,8 +92,9 @@
                 <label>Mobile</label>
                 <dx-text-box
                   formControlName="mobile"
-                  placeholder="+355 _ _ _ _ _ _ _ _ _ (Albanian mobile format)"
-                >
+                  mask="+355000000000"
+    maskInvalidMessage="The phone must have a correct Albanian phone format !"
+      >
                   <dx-validator>
                     <dxi-validation-rule
                       type="required"
@@ -129,6 +130,11 @@
                   [useSubmitBehavior]="true"
                 >
                 </dx-button>
+                <br />
+                <br />
+                <dx-button (onClick)="details()" type="default"
+                  > Details </dx-button
+                >
               </div>
             </form>
           </div>
@@ -136,40 +142,72 @@
       </div>
     </div>
 
-    <!-- data grid -->
-    <dx-data-grid
-      [dataSource]="students"
-      key="name"
-      [(visible)]="isDatagridVisible"
+    <!-- Pop up -->
+    <dx-popup
+      [width]="900"
+      [height]="350"
+      [showTitle]="true"
+      title="List of students"
+      [closeOnOutsideClick]="false"
+      [(visible)]="isPopupVisible"
     >
-      <dxi-column dataField="name"></dxi-column>
-      <dxi-column dataField="lastname"></dxi-column>
-      <dxi-column dataField="email"></dxi-column>
-      <dxi-column dataField="mobile"></dxi-column>
-      <dxi-column dataField="course"></dxi-column>
-    </dx-data-grid>
+      <dx-scroll-view width="100%" height="100%">
+        
+        <dx-data-grid
+          [dataSource]="students"
+          key="name"
+          [(visible)]="isDatagridVisible"
+          [columnMinWidth]="100"
+          [showBorders]="true"
+          (onExporting)="onExporting($event)"
+        
+      
+        >
+        <dxo-filter-row [visible]="true"></dxo-filter-row>
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
+       
+        
+        <dxo-search-panel
+        [visible]="true"
+        [highlightCaseSensitive]="true"
+      ></dxo-search-panel>
+     
+        <dxo-paging [pageSize]="5"></dxo-paging>
+        <dxo-pager
+        [showPageSizeSelector]="true"
+        [allowedPageSizes]="[5, 10, 15, 20]"
+      ></dxo-pager>
+          <dxi-column dataField="name">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+          </dxi-column>
+          <dxi-column dataField="lastname">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+          </dxi-column>
+          <dxi-column dataField="email">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+          </dxi-column>
+          <dxi-column dataField="mobile">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+          </dxi-column>
+          <dxi-column dataField="course">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+          </dxi-column>
+          <dxo-editing
+        mode="popup"
+        [allowUpdating]="true"
+        [allowDeleting]="true"
+        [allowAdding]="true">
+      </dxo-editing>
+      <dxo-export
+    [enabled]="true"
+
+    [formats]="['pdf']"
+    [allowExportSelectedData]="true"
+  ></dxo-export>
+
+ 
+      </dx-data-grid>
+      </dx-scroll-view>
+    </dx-popup>
   </div>
 </div>
-<!-- Pop up -->
-<dx-popup
-  id="entity-popup"
-  [width]="400"
-  height="auto"
-  [showTitle]="true"
-  title="Your data!"
-  [dragEnabled]="false"
-  [closeOnOutsideClick]="false"
-  [(visible)]="isPopupVisible"
->
-  <div>
-    <p>Do you want to continue with registration?</p>
-  </div>
-  <p>Name :{{ student.name }}</p>
-  <p>Lastname :{{ student.lastname }}</p>
-  <p>Email :{{ student.email }}</p>
-  <p>Password :{{ student.password }}</p>
-  <P>Mobile:{{ student.mobile }}</P>
-  <p>Cuorse :{{ student.course }}</p>
-  <br />
-  <dx-button (onClick)="register($event)" type="default">Register</dx-button>
-</dx-popup>

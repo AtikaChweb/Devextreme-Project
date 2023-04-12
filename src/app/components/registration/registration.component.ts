@@ -3,6 +3,13 @@ import notify from 'devextreme/ui/notify';
 import { Student } from '../student';
 import DataSource from 'devextreme/data/data_source';
 import { Component, OnInit } from '@angular/core';
+
+import { exportDataGrid, exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
+import { jsPDF } from 'jspdf';
+// import { exportDataGrid } from 'devextreme/pdf_exporter';
+// import { Workbook } from 'exceljs';
+// import { saveAs } from 'file-saver';
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -20,8 +27,13 @@ export class RegistrationComponent implements OnInit {
   lastNamePattern: any = /^[^0-9]+$/;
   mobilePattern: any = /^(([+])355)?(([1-6][0-9]))(\d{7})$/;
 
+  expanded: Boolean = true;
+
   constructor(private formbuilder: FormBuilder) {}
   ngOnInit(): void {
+
+
+    
     this.createRegisterForm();
     this.isPopupVisible = false;
     this.isDatagridVisible = false;
@@ -41,7 +53,7 @@ export class RegistrationComponent implements OnInit {
   // submit the form and send the data to a pop up
   userRegister(e: any) {
     
-    this.isPopupVisible = true;
+    // this.isPopupVisible = true;
     this.student = new Student(
       this.registerForm.value.name,
       this.registerForm.value.lastname,
@@ -53,12 +65,47 @@ export class RegistrationComponent implements OnInit {
   }
 
   // send the data from pop up to data grid
-  register(e: any) {
-    console.log('ne gride ', this.student);
-    this.isPopupVisible = false;
+  // register(e: any) {
+  //   console.log('ne gride ', this.student);
+  //   this.isPopupVisible = false;
+  //   // this.students.push(this.student);
+  //   // this.isDatagridVisible = true;
+
+  //   console.log(this.students);
+  // }
+  
+  
+  details(){
+    this.isPopupVisible = true;
     this.students.push(this.student);
     this.isDatagridVisible = true;
-
-    console.log(this.students);
   }
+  
+  onExporting(e:any) {
+    const doc = new jsPDF();
+    exportDataGrid({
+      jsPDFDocument: doc,
+      component: e.component,
+      indent: 5,
+    }).then(() => {
+      doc.save('Students.pdf');
+    });
+  }
+  // onExporting(e:any) {
+  //   const workbook = new Workbook();    
+  //       const worksheet = workbook.addWorksheet('Main sheet');
+  //       exportDataGrid({
+  //           component: e.component,
+  //           worksheet: worksheet
+  //       }).then(function() {
+  //           workbook.xlsx.writeBuffer()
+  //               .then(function(buffer: BlobPart) {
+  //                   saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'DataGrid.xlsx');
+  //               });
+  //       });
+  //       e.cancel = true; 
+  //   }
+    
 }
+
+
