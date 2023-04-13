@@ -4,13 +4,18 @@
   <div class="row">
     <div class="col-md-6">
       <div class="card">
-        <div class="text-center">
+      
           <div class="containter">
-            <h1 class="primary">Student Registration</h1>
+            
             <form [formGroup]="registerForm" (ngSubmit)="userRegister($event)">
-              <div class="mb-3">
+              
+                
                 <!-- Name field -->
-                <label>Name</label>
+                <div class=" text-center dx-fieldset-header"><h1>Student Registration</h1></div>
+                  <div class="dx-fieldset">
+                    <div class="dx-field">
+                      <div class="dx-field-label">Name :</div>
+                      <div class="dx-field-value">
                 <dx-text-box formControlName="name" placeholder="Name">
                   <dx-validator>
                     <dxi-validation-rule
@@ -25,9 +30,13 @@
                     </dxi-validation-rule>
                   </dx-validator>
                 </dx-text-box>
-                <br />
+
+              </div>
+            </div>
                 <!-- Lastname field -->
-                <label>Lastname</label>
+                <div class="dx-field">
+                  <div class="dx-field-label">Lastname :</div>
+                  <div class="dx-field-value">
                 <dx-text-box formControlName="lastname" placeholder="Lastname">
                   <dx-validator>
                     <dxi-validation-rule
@@ -42,9 +51,12 @@
                     </dxi-validation-rule>
                   </dx-validator>
                 </dx-text-box>
+              </div>
+            </div>
                 <!-- Email field -->
-                <br />
-                <label> Email</label>
+                <div class="dx-field">
+                  <div class="dx-field-label">Email :</div>
+                  <div class="dx-field-value">
                 <dx-text-box
                   type="email"
                   name="Email"
@@ -63,17 +75,25 @@
                     </dxi-validation-rule>
                   </dx-validator>
                 </dx-text-box>
+              </div>
+            </div>
                 <!-- password field -->
-                <br />
-                <label>Password</label>
+                <div class="dx-field">
+                  <div class="dx-field-label">Password :</div>
+                  <div class="dx-field-value">
                 <dx-text-box
-                  type="password"
-                  name="Password"
+                  
                   formControlName="password"
+                   value="password"
                   placeholder="Password"
-                  mode="password"
-                  [(value)]="passwordMode"
+                  stylingMode="filled"
+                  [(mode)]="passwordMode"
                 >
+                <dxi-button
+                name="today"
+                location="after"
+                [options]="passwordButton"
+              ></dxi-button>
                   <dx-validator>
                     <dxi-validation-rule
                       type="required"
@@ -87,9 +107,12 @@
                     ></dxi-validation-rule>
                   </dx-validator>
                 </dx-text-box>
-                <br />
+              </div>
+            </div>
                 <!-- Mobile field -->
-                <label>Mobile</label>
+                <div class="dx-field">
+                  <div class="dx-field-label">Mobile :</div>
+                  <div class="dx-field-value">
                 <dx-text-box
                   formControlName="mobile"
                   mask="+355000000000"
@@ -108,8 +131,12 @@
                     </dxi-validation-rule>
                   </dx-validator>
                 </dx-text-box>
-                <br />
-                <label>Course</label>
+              </div>
+            </div>
+              <!-- curese field -->
+              <div class="dx-field">
+                <div class="dx-field-label">Course :</div>
+                <div class="dx-field-value">
                 <dx-text-box formControlName="course" placeholder="Course">
                   <dx-validator>
                     <dxi-validation-rule
@@ -118,11 +145,15 @@
                     ></dxi-validation-rule>
                   </dx-validator>
                 </dx-text-box>
-
+              </div>
+            </div>
                 <br />
                 <dx-validation-summary id="summary"></dx-validation-summary>
                 <br />
-                <dx-button
+
+                <div class="buttons">
+                  <dx-button
+                width="30%"
                   type="success"
                   id="submit"
                   name="submit"
@@ -130,12 +161,14 @@
                   [useSubmitBehavior]="true"
                 >
                 </dx-button>
-                <br />
-                <br />
-                <dx-button (onClick)="details()" type="default"
+          
+                <dx-button (onClick)="details()" type="default" width="30%"
                   > Details </dx-button
                 >
+                </div>
+               
               </div>
+            
             </form>
           </div>
         </div>
@@ -166,7 +199,7 @@
         <dxo-filter-row [visible]="true"></dxo-filter-row>
         <dxo-header-filter [visible]="true"></dxo-header-filter>
        
-        
+        <dxo-filter-row [visible]="true"></dxo-filter-row>
         <dxo-search-panel
         [visible]="true"
         [highlightCaseSensitive]="true"
@@ -210,4 +243,3 @@
       </dx-scroll-view>
     </dx-popup>
   </div>
-</div>

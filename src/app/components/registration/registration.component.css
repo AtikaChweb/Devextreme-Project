@@ -1,13 +1,13 @@
 .card {
   margin-top: 10px;
-  border: none;
+
   width: 500px;
   padding: 40px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #e3e6f3;
+  
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
   color: #1a1a1a;
 }
@@ -18,3 +18,5 @@ input.ng-invalid.ng-touched {
   padding-top: 0;
   padding-bottom: 0;
 }
+.buttons{display: flex;
+justify-content: space-evenly;}

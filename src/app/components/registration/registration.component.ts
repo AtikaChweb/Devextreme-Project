@@ -28,11 +28,20 @@ export class RegistrationComponent implements OnInit {
   mobilePattern: any = /^(([+])355)?(([1-6][0-9]))(\d{7})$/;
 
   expanded: Boolean = true;
+  passwordButton !: { icon: string; type: string; onClick: () => void; };
 
   constructor(private formbuilder: FormBuilder) {}
   ngOnInit(): void {
 
-
+    this.passwordMode = 'password';
+    this.passwordButton = {
+      icon: './assets/images/eye.jpg',
+      type: 'default',
+      onClick: () => {
+        this.passwordMode = this.passwordMode === 'text' ? 'password' : 'text';
+      },
+    };
+    
     
     this.createRegisterForm();
     this.isPopupVisible = false;
@@ -61,7 +70,10 @@ export class RegistrationComponent implements OnInit {
       this.registerForm.value.password,
       this.registerForm.value.mobile,
       this.registerForm.value.course
+
     );
+
+    console.log(this.student)
   }
 
   // send the data from pop up to data grid
